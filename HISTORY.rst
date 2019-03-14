@@ -3,6 +3,15 @@
 History
 -------
 
+0.6.0 (2019-03-14)
+++++++++++++++++++
+
+* Use djangocms_text_ckeditor as widget on slide image caption field.
+* On `SlickSliderImage` model, change TextField to djangocms_text_ckeditor HTMLField.
+* Add (`speed`, `slides_to_show`, `arrows`, `dots`) fields on `SlickSlider` model.
+* Update on save `SlickSlider.settings` with (`speed`, `slides_to_show`, `arrows`, `dots`) fields.
+
+
 0.5.0 (2018-02-01)
 ++++++++++++++++++
 

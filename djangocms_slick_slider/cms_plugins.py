@@ -13,7 +13,6 @@ from .helpers import get_slider_image_dimensions
 from .models import SlickSlider, SlickSliderImage
 
 
-
 class SlickSliderImageInline(admin.TabularInline):
     model = SlickSliderImage
     extra = 1
