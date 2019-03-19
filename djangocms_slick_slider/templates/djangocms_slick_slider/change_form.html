@@ -1,9 +1,9 @@
 {% extends "admin/change_form.html" %}
 {% load static %}
+{% load djangocms_slick_slider_utils %}
 
 {% block object-tools %}
 {{ block.super }}
-
 <script>
     (function ($) {
         'use strict';
@@ -12,9 +12,8 @@
             $(".add-row a").on("click", function(event) {
                 var $form = $("#slickslider_form"),
                     $elCaptions = $form.find("textarea"),
-                    lastCKEditor = $elCaptions[$elCaptions.length-2];
-
-                CMS.CKEditor.init(lastCKEditor.id, {}, {});
+                    lastCaptionArea = $elCaptions[$elCaptions.length-2];
+                CMS.CKEditor.init(lastCaptionArea.id, {}, {{ ckeditor_conf|jsonify }});
             });
         });
     })(django.jQuery);
