@@ -27,7 +27,10 @@ class SlickSlider(CMSPlugin):
 
     settings = JSONField(
         verbose_name=_('slick settings'),
-        blank=True, null=True,
+        blank=True,
+        null=True,
+        editable=False,
+        default={},
         help_text=_(
             'Check <a href="http://kenwheeler.github.io/slick/" '
             'target="_blank">'
@@ -35,6 +38,14 @@ class SlickSlider(CMSPlugin):
             '<br>'
             'Use JSON format and check the errors in the editor<br>'
             'You can also use online JSON validators'))
+
+    autoplay = models.BooleanField(
+        verbose_name=_("Autoplay"),
+        default=True)
+
+    autoplay_speed = models.PositiveIntegerField(
+        verbose_name=_("Autoplay speed (ms)"),
+        default=1500)
 
     speed = models.PositiveIntegerField(
         verbose_name=_('Speed (ms)'),
@@ -54,6 +65,7 @@ class SlickSlider(CMSPlugin):
         default="#666",
         help_text=_('Define the color of slider arrows here. All CSS '
                     'color values work (e.g. #efefef).'))
+
     dots = models.BooleanField(
         _('Dots'),
         default=True)
@@ -63,26 +75,36 @@ class SlickSlider(CMSPlugin):
         Take an instance and copy the images of that instance to this
         instance.
         """
-        for image in oldinstance.images.all():
-            image.pk = None
-            image.slider = self
-            image.save()
+        for image in SlickSliderImage.objects.filter(slider=oldinstance):
+            SlickSliderImage.objects.create(
+                slider=self,
+                image=image.image,
+                link=image.link,
+                link_target=image.link_target,
+                caption_text=image.caption_text
+            ).save()
+        return
 
     def __str__(self):
         """
         String representation of SlickSlider class.
         """
-        return "{title}".format(title=self.title)
+        return self.title
 
 
 @receiver(pre_save, sender=SlickSlider)
 def settings_handler(sender, instance, **kwargs):
     """ Update `instance.settings` with slide settings form fields
     """
-    instance.settings['speed'] = instance.speed
-    instance.settings['arrows'] = instance.arrows
-    instance.settings['dots'] = instance.dots
-    instance.settings['slidesToShow'] = instance.slides_to_show
+    instance.settings = {
+        'autoplay': instance.autoplay,
+        'autoplaySpeed': instance.autoplay_speed,
+        'speed': instance.speed,
+        'arrows': instance.arrows,
+        'dots': instance.dots,
+        'slidesToShow': instance.slides_to_show
+    }
+
     return
 
 
@@ -121,4 +143,4 @@ class SlickSliderImage(models.Model):
         """
         String representation of SlickSliderImage class.
         """
-        return "{filename}".format(filename=self.image.original_filename)
+        return self.image.original_filename
