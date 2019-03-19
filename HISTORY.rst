@@ -3,6 +3,13 @@
 History
 -------
 
+0.6.1 (2019-03-19)
+++++++++++++++++++
+
+* Add `autoplay` and `autoplay_speed` fields on `SlickSlider` model.
+* Add CKEditor on change_form when user add new SlickSliderImage form
+
+
 0.6.0 (2019-03-14)
 ++++++++++++++++++
 
