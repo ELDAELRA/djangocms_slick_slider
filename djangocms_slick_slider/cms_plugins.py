@@ -5,7 +5,6 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
-from .admin import SlickerSliderAceMixin
 from .forms import SlickSliderForm
 from .helpers import get_slider_image_dimensions
 from .models import SlickSlider, SlickSliderImage
@@ -18,7 +17,7 @@ class SlickSliderImageInline(admin.TabularInline):
 
 
 @plugin_pool.register_plugin
-class SlickSliderPlugin(SlickerSliderAceMixin, CMSPluginBase):
+class SlickSliderPlugin(CMSPluginBase):
     """
     The main Slick Slider Plugin. Here, we can define various settings
     and behavior of the plugin.
