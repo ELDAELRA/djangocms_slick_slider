@@ -3,6 +3,13 @@
 History
 -------
 
+0.6.2 (2019-03-19)
+++++++++++++++++++
+
+* Remove change_form_template `change_form.html`.
+* Remove SlickerSliderAceMixin class.
+
+
 0.6.1 (2019-03-19)
 ++++++++++++++++++
 
