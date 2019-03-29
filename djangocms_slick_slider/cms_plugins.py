@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, division
-
 from django.contrib import admin
+from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
+from cms.api import _verify_plugin_type
+from cms.models import Placeholder, CMSPlugin
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 from .forms import SlickSliderForm
@@ -14,6 +16,25 @@ from djangocms_text_ckeditor import settings as text_settings
 class SlickSliderImageInline(admin.TabularInline):
     model = SlickSliderImage
     extra = 1
+
+    def get_formset(self, request, obj=None, **kwargs):
+        if not obj:
+            plugin_model, plugin_type = _verify_plugin_type('SlickSliderPlugin')
+
+            placeholder_id = request.GET.get("placeholder_id", None)
+            placeholder = Placeholder.objects.get(pk=placeholder_id)
+
+            plugin = CMSPlugin(
+                plugin_type=plugin_type,
+                placeholder=placeholder,
+                language=translation.get_language()
+            )
+            plugin = plugin.add_root(instance=plugin)
+
+            obj = plugin_model()
+            plugin.set_base_attr(obj)
+
+        return super(SlickSliderImageInline, self).get_formset(request, obj, **kwargs)
 
 
 @plugin_pool.register_plugin

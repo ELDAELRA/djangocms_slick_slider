@@ -75,7 +75,7 @@ class SlickSlider(CMSPlugin):
         Take an instance and copy the images of that instance to this
         instance.
         """
-        for image in SlickSliderImage.objects.filter(slider=oldinstance):
+        for image in oldinstance.images.all():
             SlickSliderImage.objects.create(
                 slider=self,
                 image=image.image,
