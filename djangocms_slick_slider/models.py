@@ -39,6 +39,12 @@ class SlickSlider(CMSPlugin):
             'Use JSON format and check the errors in the editor<br>'
             'You can also use online JSON validators'))
 
+    image_height = models.CharField(
+        verbose_name=_("Height"),
+        max_length=10,
+        default="200px"
+    )
+
     autoplay = models.BooleanField(
         verbose_name=_("Autoplay"),
         default=True)

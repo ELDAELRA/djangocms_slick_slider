@@ -19,8 +19,9 @@
             color: {{ instance.arrow_color }}!important;
         }
         .single-image img {
-            width: 99%;
+            height: {{ instance.image_height }};
             margin: 0 auto; /* it centers any block level element */
+            width: 99%;
         }
     </style>
 
@@ -36,7 +37,7 @@
             {% if image.link %}<a href="{{ image.link }}" target="{{ image.link_target|yesno:"_blank," }}">{% endif %}
             <img data-lazy="{{ thumb.url }}">
             {% if image.link %}</a>{% endif %}
-            
+
             {# Add caption, if exists #}
             {% if image.caption_text %}
                 <div class="slider-caption-text">
