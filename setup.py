@@ -57,9 +57,9 @@ setup(
     ],
     include_package_data=True,
     install_requires=[
-        'django-cms',
-        'jsonfield',
-        'djangocms-text-ckeditor'
+        'django-cms==3.4.5',
+        'jsonfield==2.0.2',
+        'djangocms-text-ckeditor==3.3.0'
     ],
     license="MIT",
     zip_safe=False,
